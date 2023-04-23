@@ -1,0 +1,244 @@
+swagger: "2.0"
+info:
+  description: Demyst Technical Test
+  version: 1.0.0
+  title: Loan Application
+  contact:
+    name : Mohit Khanna
+    email: khanna.mohit94@gmail.com
+basePath: /v1
+tags:
+  - name: auth
+    description: Authentication Services
+  - name: loan
+    description: Loan Services
+paths:
+  /auth/login:
+    post:
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/token_details"
+        "400":
+          description: Missing Username/Password
+          schema:
+            $ref: "#/definitions/error"
+        "401":
+          description: Invalid Username/Password
+          schema:
+            $ref: "#/definitions/error"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/error"
+      operationId: post_login
+      parameters:
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: "#/definitions/login_details"
+      tags:
+        - auth
+  /auth/signup:
+    post:
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/token_details"
+        "400":
+          description: Missing Username/Password
+          schema:
+            $ref: "#/definitions/error"
+        "409":
+          description: Username Taken
+          schema:
+            $ref: "#/definitions/error"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/error"
+      operationId: post_signup
+      parameters:
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: "#/definitions/signup_details"
+      tags:
+        - auth
+  /balanceSheet:
+    post:
+      operationId: post_balance_sheet
+      responses:
+        "200":
+          description: Success
+          schema:
+            $ref: "#/definitions/balance_sheet"
+        "400":
+          description: Malformed Request
+          schema:
+            $ref: "#/definitions/error"
+        "401":
+          description: Invalid Auth Token
+          schema:
+            $ref: "#/definitions/error"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/error"
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Your Authorization Token in the form 'Token <AUTH_TOKEN>'
+        - name: payload
+          required: true
+          in: body
+          schema:
+            $ref: "#/definitions/business_details"
+      tags:
+        - loan
+  /loanApplication:
+    post:
+      operationId: post_loan_application
+      responses:
+        "201":
+          description: Success
+          schema:
+            $ref: "#/definitions/final_outcome"
+        "400":
+          description: Malformed Request
+          schema:
+            $ref: "#/definitions/error"
+        "401":
+          description: Invalid Auth Token
+          schema:
+            $ref: "#/definitions/error"
+        "500":
+          description: Internal Server Error
+          schema:
+            $ref: "#/definitions/error"
+      parameters:
+        - name: Authorization
+          in: header
+          required: true
+          type: string
+          description: Your Authorization Token in the form 'Token <AUTH_TOKEN>'
+        - name: payload
+          required: true
+          in: body
+          schema:
+            allOf:
+              - $ref: "#/definitions/business_details"
+              - $ref: "#/definitions/balance_sheet"
+      tags:
+        - loan
+definitions:
+  business_details:
+    required:
+      - name
+      - year_established
+      - abn
+      - loan_amount
+      - accounting_provider
+    properties:
+      name:
+        type: string
+        example: "ABCD Private Limited"
+      year_established:
+        type: string
+        example: "2010"
+      abn:
+        type: string
+        minLength : 11
+        maxLength : 11
+        example: "12345678910"
+      loan_amount:
+        type: number
+        minimum : 1
+        example : 100000
+      accounting_provider:
+        type : string
+        enum: 
+          - Xero
+          - MYOB
+          - Others
+        example: Xero
+  balance_sheet:
+    required:
+      - sheet
+    properties:
+      sheet:
+        type: array
+        items:
+          type : object
+          required:
+            - year
+            - month
+            - profitOrLoss
+            - assetsValue
+          properties:
+            year:
+              type: number
+              example: 2020
+            month:
+              type: number
+              example: 5
+            profitOrLoss:
+              type: number
+              example: 50000
+            assetsValue:
+              type: number
+              example: 1234
+  login_details:
+    required:
+      - password
+      - username
+    properties:
+      username:
+        type: string
+        example: mohitkhanna
+      password:
+        type: string
+        example: khanna1234
+    type: object
+  token_details:
+    required:
+      - token
+    properties:
+      token:
+        type: string
+    type: object
+  signup_details:
+    required:
+      - password
+      - username
+    properties:
+      username:
+        type: string
+        example: mohitkhanna
+      password:
+        type: string
+        example: khanna1234
+    type: object
+  final_outcome:
+    type: object
+    required:
+      - loan_outcome
+    properties:
+      loan_outcome:
+        type: string
+        enum:
+          - Approved
+          - Declined
+        example: "Approved"
+  error:
+    type: object
+    properties:
+      message:
+        type: string
+        example: Error Message
