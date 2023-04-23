@@ -1,0 +1,8 @@
+version: "3.3"
+services:
+  main-app:
+    build: ./main-app/
+    ports:
+      - "9000:9000"
+    volumes:
+      - ./main-app:/main-app
