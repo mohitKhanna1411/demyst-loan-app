@@ -109,7 +109,7 @@
         ]
       }
     },
-    "/balanceSheet": {
+    "/loan/balanceSheet": {
       "post": {
         "operationId": "post_balance_sheet",
         "responses": {
@@ -160,11 +160,11 @@
         ]
       }
     },
-    "/loanApplication": {
+    "/loan/application": {
       "post": {
         "operationId": "post_loan_application",
         "responses": {
-          "201": {
+          "200": {
             "description": "Success",
             "schema": {
               "$ref": "#/definitions/final_outcome"
@@ -314,15 +314,16 @@
       "type": "object"
     },
     "token_details": {
+      "type": "object",
       "required": [
         "token"
       ],
       "properties": {
         "token": {
-          "type": "string"
+          "type": "string",
+          "example": "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiYWMwYjFmMDItYjQwOS00YWM3LTg5YTMtNzYyNjRlYjA4MzdjIiwidXNlcm5hbWUiOiJtazEiLCJleHAiOjE2ODIyNDAxOTN9.9xgZrMWhE-jS3fokEMwEqZL1ilYyEFHHsM5oEbQfuvw"
         }
-      },
-      "type": "object"
+      }
     },
     "signup_details": {
       "required": [

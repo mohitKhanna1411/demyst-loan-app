@@ -4,7 +4,7 @@ info:
   version: 1.0.0
   title: Loan Application
   contact:
-    name : Mohit Khanna
+    name: Mohit Khanna
     email: khanna.mohit94@gmail.com
 basePath: /v1
 tags:
@@ -69,7 +69,7 @@ paths:
             $ref: "#/definitions/signup_details"
       tags:
         - auth
-  /balanceSheet:
+  /loan/balanceSheet:
     post:
       operationId: post_balance_sheet
       responses:
@@ -102,11 +102,11 @@ paths:
             $ref: "#/definitions/business_details"
       tags:
         - loan
-  /loanApplication:
+  /loan/application:
     post:
       operationId: post_loan_application
       responses:
-        "201":
+        "200":
           description: Success
           schema:
             $ref: "#/definitions/final_outcome"
@@ -154,16 +154,16 @@ definitions:
         example: "2010"
       abn:
         type: string
-        minLength : 11
-        maxLength : 11
+        minLength: 11
+        maxLength: 11
         example: "12345678910"
       loan_amount:
         type: number
-        minimum : 1
-        example : 100000
+        minimum: 1
+        example: 100000
       accounting_provider:
-        type : string
-        enum: 
+        type: string
+        enum:
           - Xero
           - MYOB
           - Others
@@ -175,7 +175,7 @@ definitions:
       sheet:
         type: array
         items:
-          type : object
+          type: object
           required:
             - year
             - month
@@ -207,12 +207,13 @@ definitions:
         example: khanna1234
     type: object
   token_details:
+    type: object
     required:
       - token
     properties:
       token:
         type: string
-    type: object
+        example: "eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJ1dWlkIjoiYWMwYjFmMDItYjQwOS00YWM3LTg5YTMtNzYyNjRlYjA4MzdjIiwidXNlcm5hbWUiOiJtazEiLCJleHAiOjE2ODIyNDAxOTN9.9xgZrMWhE-jS3fokEMwEqZL1ilYyEFHHsM5oEbQfuvw"
   signup_details:
     required:
       - password
