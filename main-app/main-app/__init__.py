@@ -2,6 +2,8 @@
 from __future__ import absolute_import
 from v1.models import create_db
 from dotenv import load_dotenv, find_dotenv
+from flask_cors import CORS
+
 import os
 
 from flask import Flask
@@ -15,6 +17,8 @@ DB_NAME = os.environ.get("DB_NAME")
 # flask app creation
 def create_app():
     app = Flask(__name__, static_folder='static')
+    app.config['ERROR_404_HELP'] = False
+    CORS(app)
     app.register_blueprint(
         v1.bp,
         url_prefix='/v1')

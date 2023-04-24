@@ -6,3 +6,11 @@ services:
       - "9000:9000"
     volumes:
       - ./main-app:/main-app
+  frontend-app:
+    build: ./frontend-app/
+    ports:
+      - "3000:3000"
+      - "3001:3001"
+    volumes:
+      - ./frontend-app:/frontend-app
+      - /frontend-app/node_modules
