@@ -12,19 +12,20 @@ import {
 
 const balanceSheetDiv = document.getElementById('balanceSheetDiv')
 const balanceSheetTable = document.getElementById('balanceSheetTable')
+const token = tokenFormatter(localStorage.getItem('token'))
+
+const loanForm = document.getElementById('loanForm');
+const loanBusinessName = loanForm.elements['loanBusinessName']
+const loanYearEstablished = loanForm.elements['loanYearEstablished']
+const loanABN = loanForm.elements['loanABN']
+const loanAmount = loanForm.elements['loanAmount']
+const loanAccountingProviderMYOB = loanForm.elements["loanAccountingProviderMYOB"]
+const loanAccountingProviderXero = loanForm.elements["loanAccountingProviderXero"]
+const loanAccountingProviderOthers = loanForm.elements["loanAccountingProviderOthers"]
+let accountingProvider = ""
+let sheet = []
 
 balanceSheetButton.addEventListener('click', (e) => {
-    e.preventDefault()
-    balanceSheetButton.classList.add('is-loading')
-    const loanForm = document.getElementById('loanForm');
-    const loanBusinessName = loanForm.elements['loanBusinessName']
-    const loanYearEstablished = loanForm.elements['loanYearEstablished']
-    const loanABN = loanForm.elements['loanABN']
-    const loanAmount = loanForm.elements['loanAmount']
-    const loanAccountingProviderMYOB = loanForm.elements["loanAccountingProviderMYOB"]
-    const loanAccountingProviderXero = loanForm.elements["loanAccountingProviderXero"]
-    const loanAccountingProviderOthers = loanForm.elements["loanAccountingProviderOthers"]
-    let accountingProvider = ""
     if (loanAccountingProviderMYOB.checked) {
         accountingProvider = loanAccountingProviderMYOB.value;
     }
@@ -34,6 +35,9 @@ balanceSheetButton.addEventListener('click', (e) => {
     if (loanAccountingProviderOthers.checked) {
         accountingProvider = loanAccountingProviderOthers.value;
     }
+    e.preventDefault()
+    balanceSheetButton.classList.add('is-loading')
+
 
     const payload = {
         name: loanBusinessName.value,
@@ -42,7 +46,6 @@ balanceSheetButton.addEventListener('click', (e) => {
         loan_amount: Number(loanAmount.value),
         accounting_provider: accountingProvider
     }
-    const token = tokenFormatter(localStorage.getItem('token'))
 
     const options = {
         method: 'POST',
@@ -64,7 +67,7 @@ balanceSheetButton.addEventListener('click', (e) => {
             .then(data => {
                 balanceSheetButton.classList.remove('is-loading')
                 if (data.sheet) {
-                    const { sheet } = data
+                    sheet = data.sheet
                     balanceSheetDiv.classList.remove('is-hidden')
 
                     let out = "";
@@ -81,10 +84,11 @@ balanceSheetButton.addEventListener('click', (e) => {
 
                     balanceSheetTable.innerHTML = out;
                 } else {
+                    console.log(data)
                     return alertMessageBuilder(
                         errorModal,
                         errorMessage,
-                        "Something went wrong!"
+                        data.message + " " + data.errors[0]
                     )
                 }
 
@@ -107,4 +111,56 @@ balanceSheetButton.addEventListener('click', (e) => {
             'Please input required fields!'
         )
     }
+})
+
+finalOutcome.addEventListener('click', (e) => {
+    e.preventDefault()
+    finalOutcome.classList.add('is-loading')
+
+    const payload = {
+        name: loanBusinessName.value,
+        year_established: loanYearEstablished.value,
+        abn: loanABN.value,
+        loan_amount: Number(loanAmount.value),
+        accounting_provider: accountingProvider,
+        sheet
+    }
+
+    const options = {
+        method: 'POST',
+        mode: 'cors',
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': `Token ${token}`,
+
+        },
+        body: JSON.stringify(payload),
+    }
+
+    makeAPIRequest('loan/application', options)
+        .then(data => {
+            finalOutcome.classList.remove('is-loading')
+
+            if (data.loan_outcome === 'Approved') {
+                alertMessageBuilder(
+                    successModal,
+                    successMessage,
+                    'Congrats!! your loan for $' + loanAmount.value + ' is ' + data.loan_outcome
+                )
+
+            } else {
+                alertMessageBuilder(
+                    errorModal,
+                    errorMessage,
+                    'Sadly!! your loan for $' + loanAmount.value + ' is ' + data.loan_outcome
+                )
+            }
+        })
+        .catch(err => { // error
+            return alertMessageBuilder(
+                errorModal,
+                errorMessage,
+                "Something went wrong!" + err
+            )
+        })
 })

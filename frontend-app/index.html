@@ -19,6 +19,7 @@
     <nav class="bd-navbar navbar has-shadow is-spaced is-white">
         <div class="navbar-brand">
             <a class="navbar-item" href="/">
+                <span class="is-size-3 has-text-weight-bold">Demyst | Loan Application</span>
             </a>
         </div>
 
@@ -173,15 +174,18 @@
                         <label class="label">Accounting Provider</label>
                         <div class="control">
                             <label class="radio">
-                                <input type="radio" value="MYOB" id="loanAccountingProviderMYOB">
+                                <input type="radio" value="MYOB" name="loanAccountingProvider"
+                                    id="loanAccountingProviderMYOB">
                                 MYOB
                             </label>
                             <label class="radio">
-                                <input type="radio" value="Xero" id="loanAccountingProviderXero">
+                                <input type="radio" value="Xero" name="loanAccountingProvider"
+                                    id="loanAccountingProviderXero">
                                 Xero
                             </label>
                             <label class="radio">
-                                <input type="radio" value="Others" id="loanAccountingProviderOthers">
+                                <input type="radio" value="Others" name="loanAccountingProvider"
+                                    id="loanAccountingProviderOthers">
                                 Others
                             </label>
                         </div>
@@ -190,32 +194,33 @@
                         <button class="button is-medium is-rounded is-info has-text-weight-bold"
                             id="balanceSheetButton">Get Balance Sheet</button>
                     </div>
+
                 </form>
             </div>
         </section>
 
         <section class="balanceSheetDiv has-background-info-light is-hidden" id="balanceSheetDiv">
             <div class="column is-12">
+                <div class="m-6">
+                    <table class="table is-bordered has-background-info-light is-hoverable is-fullwidth is-size-5">
+                        <thead>
+                            <tr>
+                                <th>Year</th>
+                                <th>Month</th>
+                                <th>Profit/Loss</th>
+                                <th>Assests Value</th>
+                            </tr>
+                        </thead>
+                        <tbody id="balanceSheetTable">
+                        </tbody>
+                    </table>
 
-                <table class="table is-bordered has-background-info-light m-6 is-hoverable">
-                    <thead>
-                        <tr>
-                            <th>Year</th>
-                            <th>Month</th>
-                            <th>Profit/Loss</th>
-                            <th>Assests Value</th>
-                        </tr>
-                    </thead>
-                    <tbody id="balanceSheetTable">
-                        <!-- Prodcuts from javascript file in here. -->
-                    </tbody>
-                </table>
+                    <div class="has-text-centered m-3">
+                        <button type="button" class="button is-medium is-rounded is-info has-text-weight-bold"
+                            id="finalOutcome">Final Outcome</button>
+                    </div>
+                </div>
             </div>
-            <div class="has-text-centered m-3">
-                <button type="button" class="button is-medium is-rounded is-info has-text-weight-bold"
-                    id="finalOutcome">Final Outcome</button>
-            </div>
-
         </section>
         <!-- Loan application page ends-->
 
@@ -268,7 +273,7 @@
     <!-- footer starts -->
     <footer class="footer">
         <div class="content has-text-centered">
-            <p>Demyst Technical Assignment | Loan Application © 2023</p>
+            <p>Demyst Technical Assignment © 2023</p>
             <p>Made by Mohit Khanna with ❤️</p>
         </div>
     </footer>
