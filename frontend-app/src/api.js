@@ -11,7 +11,6 @@ const getJSON = (path, options) => {
 }
 const baseURL = 'http://127.0.0.1:9000/v1'
 const makeAPIRequest = (path, options) => {
-
     return getJSON(`${baseURL}/${path}`, options)
 }
 
