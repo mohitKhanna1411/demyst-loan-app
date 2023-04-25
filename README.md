@@ -1,5 +1,12 @@
 # Demyst Loan Application
 
+## Tech Stack
+```
+1. Backend : Python
+2. Frontend : VanilaJS + Bulma
+3. Containerization : Docker
+4. Database : SQLlite
+```
 
 ## Steps to run
 ```
