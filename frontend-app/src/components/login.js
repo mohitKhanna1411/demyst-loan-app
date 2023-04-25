@@ -33,15 +33,6 @@ loginButton.addEventListener('click', (e) => {
     const isValidForm = errors.length === 0
 
     if (isValidForm) { // if valid 
-        // if (loginPassword.value !== loginConfirmPassword.value) { // if password does not match
-        //     loginButton.classList.remove('is-loading')
-
-        //     return alertMessageBuilder( // error modal
-        //         errorModal,
-        //         errorMessage,
-        //         'Password does not match!'
-        //     )
-        // }
         // Login api
         makeAPIRequest('auth/login', options)
             .then(data => {
@@ -55,7 +46,7 @@ loginButton.addEventListener('click', (e) => {
                     loginButton.classList.add('is-loading')
                     login.style.display = 'none'
                     // feed.style.display = 'block'
-                    // Reload Page to get the feed
+                    // Reload Page to get the loan application page
                     location.reload()
                 } else {
                     // error

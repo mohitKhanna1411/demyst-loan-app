@@ -12,6 +12,7 @@ const login = document.getElementById('login')
 const registrationLink = document.getElementById('registrationLink')
 const loginLink = document.getElementById('loginLink')
 const logoutLink = document.getElementById('logoutLink')
+const loanApplication = document.getElementById('loanApplication')
 
 //Recipe Details
 // const recipe_details = document.getElementById('recipe_details')
@@ -27,7 +28,8 @@ const isUserLoggedIn = token ? true : false
 
 // Set the initial state on page load whether or not the user is logged in.
 if (isUserLoggedIn) { // if token present in localstorage
-
+    loanApplication.classList.remove('is-hidden')
+    logoutLink.classList.remove('is-hidden')
 
 } else { // not loggedin
     login.style.display = 'block'

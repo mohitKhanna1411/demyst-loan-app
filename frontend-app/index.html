@@ -127,36 +127,141 @@
             </div>
         </section>
         <!-- Login Page ends-->
-        <section class="is-hidden">
-            <div class="field">
-                <p class="control has-icons-left has-icons-right">
-                    <input class="input" type="email" placeholder="Email">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-envelope"></i>
-                    </span>
-                    <span class="icon is-small is-right">
-                        <i class="fas fa-check"></i>
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="control has-icons-left">
-                    <input class="input" type="password" placeholder="Password">
-                    <span class="icon is-small is-left">
-                        <i class="fas fa-lock"></i>
-                    </span>
-                </p>
-            </div>
-            <div class="field">
-                <p class="control">
-                    <button class="button is-success">
-                        Login
-                    </button>
-                </p>
+
+        <!-- Loan application page starts-->
+        <section class="loanApplication has-background-info-light is-hidden" id="loanApplication">
+
+            <div class="column is-12">
+                <form class="m-6" id="loanForm">
+                    <div class="field">
+                        <label class="label">Business Name</label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Business Name" id="loanBusinessName" />
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-user-secret"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Year Established</label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Year Established" id="loanYearEstablished" />
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">ABN</label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="ABN" id="loanABN" />
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Loan Amount</label>
+                        <p class="control has-icons-left">
+                            <input class="input" type="text" placeholder="Loan Amount" id="loanAmount" />
+                            <span class="icon is-small is-left">
+                                <i class="fa fa-lock"></i>
+                            </span>
+                        </p>
+                    </div>
+                    <div class="field">
+                        <label class="label">Accounting Provider</label>
+                        <div class="control">
+                            <label class="radio">
+                                <input type="radio" value="MYOB" id="loanAccountingProviderMYOB">
+                                MYOB
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="Xero" id="loanAccountingProviderXero">
+                                Xero
+                            </label>
+                            <label class="radio">
+                                <input type="radio" value="Others" id="loanAccountingProviderOthers">
+                                Others
+                            </label>
+                        </div>
+                    </div>
+                    <div class="mt-6 has-text-centered">
+                        <button class="button is-medium is-rounded is-info has-text-weight-bold"
+                            id="balanceSheetButton">Get Balance Sheet</button>
+                    </div>
+                </form>
             </div>
         </section>
 
+        <section class="balanceSheetDiv has-background-info-light is-hidden" id="balanceSheetDiv">
+            <div class="column is-12">
 
+                <table class="table is-bordered has-background-info-light m-6 is-hoverable">
+                    <thead>
+                        <tr>
+                            <th>Year</th>
+                            <th>Month</th>
+                            <th>Profit/Loss</th>
+                            <th>Assests Value</th>
+                        </tr>
+                    </thead>
+                    <tbody id="balanceSheetTable">
+                        <!-- Prodcuts from javascript file in here. -->
+                    </tbody>
+                </table>
+            </div>
+            <div class="has-text-centered m-3">
+                <button type="button" class="button is-medium is-rounded is-info has-text-weight-bold"
+                    id="finalOutcome">Final Outcome</button>
+            </div>
+
+        </section>
+        <!-- Loan application page ends-->
+
+        <!-- Error Modal starts -->
+        <section class="is-clipped">
+            <div class="modal" id="errorModal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="box notification is-danger is-light">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content has-text-centered">
+                                    <span id="errorMessage"></span>
+                                    <!-- Any other Bulma elements you want -->
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <button id="closeErrorModal" class="modal-close is-large" aria-label="close"></button>
+                </div>
+            </div>
+        </section>
+        <!-- Error Modal ends -->
+
+        <!-- Success Modal starts -->
+        <section class="is-clipped">
+            <div class="modal" id="successModal">
+                <div class="modal-background"></div>
+                <div class="modal-content">
+                    <div class="box notification is-success is-light">
+                        <article class="media">
+                            <div class="media-content">
+                                <div class="content has-text-centered">
+                                    <span id="successMessage"></span>
+                                    <!-- Any other Bulma elements you want -->
+                                </div>
+                            </div>
+                        </article>
+                    </div>
+
+                    <button id="closeSuccessModal" class="modal-close is-large" aria-label="close"></button>
+                </div>
+            </div>
+        </section>
+        <!-- Success Modal ends -->
     </main>
     <!-- main ends -->
 
@@ -175,6 +280,7 @@
     <script type="module" src="src/components/login.js" defer></script>
     <script type="module" src="src/components/registration.js" defer></script>
     <script type="module" src="src/components/loanApplication.js" defer></script>
+    <script type="module" src="src/components/modal.js" defer></script>
 </body>
 
 </html>
