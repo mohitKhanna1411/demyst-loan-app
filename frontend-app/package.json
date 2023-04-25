@@ -1,7 +1,7 @@
 {
-  "name": "samosa",
+  "name": "demyst",
   "version": "1.0.0",
-  "description": "IT Project COMP9900",
+  "description": "Demyst Technical Test | Loan Application",
   "main": "index.js",
   "scripts": {
     "start": "lite-server"
